@@ -29,6 +29,6 @@ def test_data_handler(test_data):
 
     count_rows = X_train.shape[0] + X_test.shape[0] + X_val.shape[0]
 
-    assert round(X_train.shape[0]/count_rows, 1) == 0.5
-    assert round(X_test.shape[0]/count_rows, 1) == 0.4
-    assert round(X_val.shape[0]/count_rows, 1) == 0.1
+    assert round(X_train.shape[0] / count_rows, 1) == 0.5
+    assert round(X_test.shape[0] / count_rows, 1) == 0.4
+    assert round(X_val.shape[0] / count_rows, 1) == 0.1
