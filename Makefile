@@ -34,7 +34,7 @@ flake8: ## Run flake8
 
 .PHONY: pylint
 pylint: ## Run pylint
-	poetry run pylint vmo2_mlops_tech_test
+	poetry run pylint src
 
 .PHONY: mypy
 mypy: ## Run mypy
