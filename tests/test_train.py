@@ -32,3 +32,11 @@ def test_data_handler(test_data):
     assert round(X_train.shape[0] / count_rows, 1) == 0.5
     assert round(X_test.shape[0] / count_rows, 1) == 0.4
     assert round(X_val.shape[0] / count_rows, 1) == 0.1
+
+
+def test_data_handler_throws_exception():
+
+    data_handler = DataHandler("./doesnotexist", "target")
+
+    with pytest.raises(FileNotFoundError):
+        data_handler.load_data()
