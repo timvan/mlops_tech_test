@@ -37,9 +37,9 @@ warn_return_any = true
 warn_unused_configs = true
 
 [tool.poetry]
-authors = ["timv <timv@graphcore.ai>"]
+authors = ["timv <timvanellemeet@gmail.com>"]
 description = ""
-name = "vmo2_mlops_tech_test"
+name = "mlops_tech_test"
 packages = [{include = "src"}]
 readme = "README.md"
 version = "0.1.0"
