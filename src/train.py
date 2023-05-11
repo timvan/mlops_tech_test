@@ -1,3 +1,4 @@
+import logging
 import os
 from pathlib import Path
 
@@ -10,23 +11,50 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from xgboost import XGBClassifier
 
+# Setup logging
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
+
+class DataHandler():
+    def __init__(self, file_path: str, target: str) -> None:
+        self.X = None
+        self.y = None
+        self.file_path = file_path
+        self.target = target
+
+    def load_data(self):
+        try:
+            df = pd.read_csv(self.file_path)
+
+        except FileNotFoundError as e:
+            logger.error(f"File not found: {self.file_path}")
+            raise e
+
+        self.y = df[self.target]
+        self.X = df.drop([self.target], axis=1)
+
+    def split_data(self, test_size: float, val_size: float):
+
+        total_test_size = test_size + val_size
+
+        X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size=total_test_size)
+
+        rel_val_size = 1 / ( total_test_size / val_size)
+
+        X_test, X_val, y_test, y_val = train_test_split(X_test, y_test, test_size=rel_val_size)
+
+        return X_train, X_test, X_val, y_train, y_test, y_val
+
+
 
 def train(file_path: str):
 
-    # load data
-    df = pd.read_csv(file_path)
-
-    # split data
-    target = "Adopted"
-
-    y = df[target]
-    X = df.drop([target], axis=1)
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4)
-    X_test, X_val, y_test, y_val = train_test_split(X_test, y_test, test_size=0.5)
+    data_handler = DataHandler(file_path, "Adopted")
+    data_handler.load_data()
+    X_train, X_test, X_val, y_train, y_test, y_val = data_handler.split_data(0.2, 0.2)
 
     # create preprocessor
-    categorical_columns = X.select_dtypes(include=["object"]).columns
+    categorical_columns = data_handler.X.select_dtypes(include=["object"]).columns
     preprocessor = ColumnTransformer(
         transformers=[("cat", OneHotEncoder(handle_unknown="ignore"), categorical_columns)], remainder="passthrough"
     )
