@@ -1,3 +1,10 @@
+# Project
+output/*
+
+# IDEs
+.vscode
+
+
 # Python
 ## https://github.com/github/gitignore/blob/main/Python.gitignore
 
