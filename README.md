@@ -1,6 +1,6 @@
-# vmo2_mlops_tech_test
+# mlops_tech_test
 
-VMO2 MLOPs tech test.
+MLOPs tech test.
 
 ## Introduction
 
